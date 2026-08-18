@@ -461,9 +461,17 @@
   });
 
   // ---------- ntfy ----------
+  // Browsers only allow ASCII (Latin1) bytes in fetch() header values, so any
+  // Chinese/emoji title must be RFC 2047 encoded (ntfy decodes this on the
+  // server side) or the fetch call throws a TypeError.
+  function encodeHeaderValue(str){
+    if(/^[\x00-\x7F]*$/.test(str)) return str;
+    const b64 = btoa(unescape(encodeURIComponent(str)));
+    return `=?UTF-8?B?${b64}?=`;
+  }
   async function publish(topic, {title, body, delaySeconds}){
     if(!topic) throw new Error('尚未設定 ntfy 主題');
-    const headers = {'Title': title};
+    const headers = {'Title': encodeHeaderValue(title)};
     if(delaySeconds !== undefined){
       const ts = Math.floor(Date.now()/1000) + delaySeconds;
       headers['Delay'] = String(ts);
