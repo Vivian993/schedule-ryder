@@ -363,12 +363,28 @@
   const $$ = s => document.querySelectorAll(s);
 
   // ---------- storage helpers ----------
+  // window.storage only exists inside Claude's artifact preview. When this file
+  // is self-hosted (e.g. GitHub Pages), it's undefined, so we fall back to the
+  // browser's own localStorage, which works normally on a real hosted page.
+  const HAS_CLAUDE_STORAGE = !!(window.storage && typeof window.storage.get === 'function');
+  const LS_PREFIX = 'schedule-app:';
+
   async function getVal(key, fallback){
-    try{ const r = await window.storage.get(key, true); return r ? JSON.parse(r.value) : fallback; }
-    catch(e){ return fallback; }
+    if(HAS_CLAUDE_STORAGE){
+      try{ const r = await window.storage.get(key, true); return r ? JSON.parse(r.value) : fallback; }
+      catch(e){ return fallback; }
+    }
+    try{
+      const raw = localStorage.getItem(LS_PREFIX + key);
+      return raw !== null ? JSON.parse(raw) : fallback;
+    }catch(e){ return fallback; }
   }
   async function setVal(key, val){
-    try{ await window.storage.set(key, JSON.stringify(val), true); }catch(e){ console.error(e); }
+    if(HAS_CLAUDE_STORAGE){
+      try{ await window.storage.set(key, JSON.stringify(val), true); }catch(e){ console.error(e); }
+      return;
+    }
+    try{ localStorage.setItem(LS_PREFIX + key, JSON.stringify(val)); }catch(e){ console.error(e); }
   }
 
   let TOPIC = '';
@@ -378,11 +394,21 @@
 
   // personal (per-user) storage helpers — theme/sound are device/person prefs, not shared
   async function getPersonal(key, fallback){
-    try{ const r = await window.storage.get(key, false); return r ? JSON.parse(r.value) : fallback; }
-    catch(e){ return fallback; }
+    if(HAS_CLAUDE_STORAGE){
+      try{ const r = await window.storage.get(key, false); return r ? JSON.parse(r.value) : fallback; }
+      catch(e){ return fallback; }
+    }
+    try{
+      const raw = localStorage.getItem(LS_PREFIX + key);
+      return raw !== null ? JSON.parse(raw) : fallback;
+    }catch(e){ return fallback; }
   }
   async function setPersonal(key, val){
-    try{ await window.storage.set(key, JSON.stringify(val), false); }catch(e){ console.error(e); }
+    if(HAS_CLAUDE_STORAGE){
+      try{ await window.storage.set(key, JSON.stringify(val), false); }catch(e){ console.error(e); }
+      return;
+    }
+    try{ localStorage.setItem(LS_PREFIX + key, JSON.stringify(val)); }catch(e){ console.error(e); }
   }
 
   // ---------- click sound ----------
