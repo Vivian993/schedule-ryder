@@ -66,6 +66,59 @@
   .disp{font-family:'Space Grotesk','Noto Sans TC',sans-serif;}
   .mono{font-family:'IBM Plex Mono',monospace;}
 
+  /* 🔐 密碼鎖定畫面 */
+  .lock-screen {
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    background:#0D141C;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 1.6px);
+    background-size:22px 22px;
+    z-index:99999;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .lock-screen.unlocked {
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .lock-card {
+    background:#17212B;
+    border:1px solid #2B3846;
+    border-radius:18px;
+    padding:28px 24px;
+    width:100%;
+    max-width:330px;
+    text-align:center;
+    box-shadow:0 16px 36px rgba(0,0,0,0.5);
+  }
+  .lock-card h2 {
+    color:#fff;
+    margin:0 0 6px;
+    font-size:18px;
+    font-weight:700;
+  }
+  .lock-card p {
+    color:#9AB0A2;
+    font-size:13px;
+    margin:0 0 18px;
+  }
+  .lock-err {
+    color:#F07865;
+    font-size:12.5px;
+    margin-top:10px;
+    min-height:18px;
+    font-weight:500;
+  }
+  .shake {
+    animation:lockShake .36s ease;
+  }
+  @keyframes lockShake {
+    0%, 100% { transform:translateX(0); }
+    20%, 60% { transform:translateX(-8px); }
+    40%, 80% { transform:translateX(8px); }
+  }
+
   header{
     position:sticky; top:0; z-index:20;
     background:var(--deep);
@@ -264,6 +317,18 @@
 </head>
 <body>
 
+<!-- 🔐 密碼保護鎖定層 -->
+<div id="lock-screen" class="lock-screen">
+  <div class="lock-card">
+    <div class="chip" style="margin:0 auto 16px;"></div>
+    <h2>課表控制台</h2>
+    <p>請輸入存取密碼以繼續</p>
+    <input type="password" id="lock-pass-input" inputmode="numeric" placeholder="請輸入密碼" maxlength="20" autofocus autocomplete="off" style="text-align:center; font-size:16px; letter-spacing:0.15em; font-family:'IBM Plex Mono', monospace;">
+    <button type="button" class="btn primary" id="btn-unlock" style="width:100%; margin-top:14px; padding:12px; font-size:14px;">解鎖進入</button>
+    <div id="lock-err-msg" class="lock-err"></div>
+  </div>
+</div>
+
 <header>
   <div class="rail red">
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -412,6 +477,36 @@
 </main>
 
 <script>
+// 🔐 密碼驗證邏輯
+(function(){
+  const REQUIRED_PASSWORD = '100819';
+  const lockScreen = document.getElementById('lock-screen');
+  const passInput = document.getElementById('lock-pass-input');
+  const unlockBtn = document.getElementById('btn-unlock');
+  const errMsg = document.getElementById('lock-err-msg');
+  const lockCard = lockScreen.querySelector('.lock-card');
+
+  function attemptUnlock(){
+    const inputVal = passInput.value.trim();
+    if(inputVal === REQUIRED_PASSWORD){
+      lockScreen.classList.add('unlocked');
+      setTimeout(()=>{ lockScreen.remove(); }, 350);
+    } else {
+      errMsg.textContent = '密碼錯誤，請重新輸入';
+      lockCard.classList.remove('shake');
+      void lockCard.offsetWidth; // 觸發重繪以重啟震動動畫
+      lockCard.classList.add('shake');
+      passInput.value = '';
+      passInput.focus();
+    }
+  }
+
+  unlockBtn.addEventListener('click', attemptUnlock);
+  passInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') attemptUnlock();
+  });
+})();
+
 (function(){
   const PERIODS = [
     {id:'z',label:'早自習',time:'07:30–07:50',isClass:false},
@@ -572,7 +667,7 @@
     return lines.join('\n');
   }
 
-  // ---------- 新增：計算目前/下一堂課 ----------
+  // ---------- 計算目前/下一堂課 ----------
   function parseTimeRange(timeStr){
     // "08:10–09:00" -> {startMin, endMin}
     const parts = timeStr.split(/[–-]/);
@@ -803,7 +898,7 @@
     grid.innerHTML = gridHtml;
   }
 
-  // 用事件代理綁在月曆容器上，不管畫面重繪幾次都不會失效
+  // 用事件代理綁在月曆容器上
   $('#cal-grid').addEventListener('click', (e) => {
     const cell = e.target.closest('.cal-cell[data-date]');
     if(!cell) return;
@@ -813,7 +908,6 @@
     } else {
       selectedCalDateStr = dStr;
       $('#ev-date').value = dStr;
-      // 不自動捲動、不自動彈鍵盤，讓月曆保持在畫面上，使用者自己往下滑填表單
     }
     renderCalendar();
     renderEvents();
@@ -831,7 +925,6 @@
     renderEvents();
   });
 
-  // ---------- 新增：計算行程倒數天數的顯示文字 ----------
   function countdownLabel(ts){
     const now = new Date();
     const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -962,7 +1055,6 @@
     for(let d=1; d<=5; d++){
       const text = dayScheduleText(d);
       const cronExpr = `0 17 * * ${CRON_DOW_FOR[d]}`;
-      // 自動打包成 GET 參數網址，完全不需要填 Header 和 Body 欄位！
       const safeTitle = encodeURIComponent(`📚 明天課表（${DAYNAMES[d]}）`);
       const safeBody = encodeURIComponent(text);
       const fullUrl = `https://ntfy.sh/${topic}?title=${safeTitle}&message=${safeBody}`;
@@ -1109,7 +1201,7 @@
 
   (async function init(){
     TOPIC = cleanTopic(await getVal('ntfy-topic', ''));
-    await setVal('ntfy-topic', TOPIC); // 自動修復先前混入的隱藏字元
+    await setVal('ntfy-topic', TOPIC);
     EVENTS = await getVal('calendar-events', []);
     THEME_DARK = await getPersonal('theme-dark', false);
     SOUND_ON = await getPersonal('sound-on', true);
