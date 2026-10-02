@@ -367,6 +367,20 @@
       <button class="btn primary" id="btn-gen-cron">產生一鍵發送專屬網址</button>
       <div id="cron-output"></div>
     </div>
+
+    <!-- 💾 備份與還原功能 -->
+    <div class="card">
+      <h2>💾 備份與還原資料</h2>
+      <p class="desc">您可以把行事曆行程與 ntfy 主題設定匯出成檔案備份，或匯入以前的備份檔。</p>
+      <div style="display:flex; gap:10px;">
+        <button class="btn ghost" id="btn-export" style="flex:1;">📥 匯出備份 (JSON)</button>
+        <label class="btn primary" style="flex:1; text-align:center; padding:10px; margin:0; cursor:pointer;">
+          📤 選擇檔案還原備份
+          <input type="file" id="import-file" accept=".json" style="display:none;">
+        </label>
+      </div>
+      <div class="status-line" id="backup-status"></div>
+    </div>
   </section>
 
 </main>
@@ -897,6 +911,48 @@
         const orig = b.textContent; b.textContent='已複製'; setTimeout(()=>b.textContent=orig,1200);
       });
     });
+  });
+
+  // 💾 匯出備份
+  $('#btn-export').addEventListener('click', ()=>{
+    const data = {
+      topic: TOPIC,
+      events: EVENTS
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'schedule-backup-' + new Date().toISOString().split('T')[0] + '.json';
+    a.click();
+    showStatus('#backup-status', '備份檔案已成功下載！', 'ok');
+  });
+
+  // 📤 匯入備份
+  $('#import-file').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = async (event)=>{
+      try{
+        const parsed = JSON.parse(event.target.result);
+        if(parsed.topic !== undefined){
+          TOPIC = parsed.topic;
+          $('#set-topic').value = TOPIC;
+          await setVal('ntfy-topic', TOPIC);
+        }
+        if(parsed.events && Array.isArray(parsed.events)){
+          EVENTS = parsed.events;
+          await setVal('calendar-events', EVENTS);
+        }
+        renderCalendar();
+        renderEvents();
+        showStatus('#backup-status', '備份還原成功！', 'ok');
+      }catch(err){
+        showStatus('#backup-status', '檔案格式錯誤，還原失敗', 'err');
+      }
+    };
+    reader.readAsText(file);
   });
 
   function showStatus(sel, msg, kind){
