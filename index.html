@@ -913,7 +913,7 @@
     });
   });
 
-  // 💾 匯出備份
+  // 💾 備份與還原功能（支援新舊版欄位格式兼容）
   $('#btn-export').addEventListener('click', ()=>{
     const data = {
       topic: TOPIC,
@@ -928,7 +928,6 @@
     showStatus('#backup-status', '備份檔案已成功下載！', 'ok');
   });
 
-  // 📤 匯入備份
   $('#import-file').addEventListener('change', (e)=>{
     const file = e.target.files[0];
     if(!file) return;
@@ -936,15 +935,22 @@
     reader.onload = async (event)=>{
       try{
         const parsed = JSON.parse(event.target.result);
-        if(parsed.topic !== undefined){
-          TOPIC = parsed.topic;
+        
+        // 兼容新舊版備份格式 (topic 或 ntfyTopic)
+        const loadedTopic = parsed.topic || parsed.ntfyTopic;
+        if(loadedTopic !== undefined){
+          TOPIC = loadedTopic;
           $('#set-topic').value = TOPIC;
           await setVal('ntfy-topic', TOPIC);
         }
-        if(parsed.events && Array.isArray(parsed.events)){
-          EVENTS = parsed.events;
+        
+        // 兼容新舊版備份格式 (events 或 calendarEvents)
+        const loadedEvents = parsed.events || parsed.calendarEvents;
+        if(loadedEvents && Array.isArray(loadedEvents)){
+          EVENTS = loadedEvents;
           await setVal('calendar-events', EVENTS);
         }
+        
         renderCalendar();
         renderEvents();
         showStatus('#backup-status', '備份還原成功！', 'ok');
