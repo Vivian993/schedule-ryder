@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>課表控制台</title>
-<!-- 📌 iPhone 桌面 App 圖示：它會去抓您上傳到 GitHub 的 custom-icon.png 照片 -->
+<!-- 📌 iPhone 桌面 App 圖示 -->
 <link rel="apple-touch-icon" href="custom-icon.png">
 <link rel="icon" type="image/png" href="custom-icon.png">
 
@@ -31,6 +31,7 @@
     --muted:#5B6459;
     --dot:rgba(22,35,28,0.06);
   }
+  /* 深色模式優化：提高文字對比度 */
   body.theme-dark{
     --ink:#F2F5EE;
     --deep:#080D12;
@@ -182,7 +183,7 @@
   .cal-dot{width:4px; height:4px; border-radius:50%; background:var(--copper);}
   .cal-cell.selected .cal-dot{background:#1a1208;}
 
-  /* 彈出互動視窗 (Modal) */
+  /* 🚀 彈出互動視窗 (Modal) 樣式 */
   .modal-overlay{
     position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);
     display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px;
@@ -292,7 +293,7 @@
       <div class="cnt"><span id="home-count-lab">今天堂數</span><b id="home-count">0</b></div>
     </div>
 
-    <!-- 即時上課狀態橫幅 -->
+    <!-- 🔴 即時上課狀態橫幅 -->
     <div class="live-status-box" id="live-status-box">
       <span id="live-status-text">⏳ 正在計算目前上課進度...</span>
     </div>
@@ -325,6 +326,7 @@
 
   <!-- CALENDAR -->
   <section class="view" id="view-calendar">
+    <!-- 月曆視圖 -->
     <div class="card">
       <div class="cal-header">
         <button class="btn small ghost" id="cal-prev">◀ 上個月</button>
@@ -332,7 +334,7 @@
         <button class="btn small ghost" id="cal-next">下個月 ▶</button>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
-      <p style="font-size:11.5px; color:var(--muted); text-align:center; margin-top:10px;">💡 提示：點擊上方月曆任一日期格子，即可直接彈出視窗新增行程與自訂推播時間！</p>
+      <p style="font-size:11.5px; color:var(--muted); text-align:center; margin-top:10px;">💡 提示：直接點選上方日曆的格子，就可以新增行程與排定推播喔！</p>
     </div>
 
     <div class="card">
@@ -368,15 +370,14 @@
       <div id="cron-output"></div>
     </div>
 
-    <!-- 💾 備份與還原功能 -->
     <div class="card">
-      <h2>💾 備份與還原資料</h2>
-      <p class="desc">您可以把行事曆行程與 ntfy 主題設定匯出成檔案備份，或匯入以前的備份檔。</p>
-      <div style="display:flex; gap:10px;">
-        <button class="btn ghost" id="btn-export" style="flex:1;">📥 匯出備份 (JSON)</button>
-        <label class="btn primary" style="flex:1; text-align:center; padding:10px; margin:0; cursor:pointer;">
-          📤 選擇檔案還原備份
-          <input type="file" id="import-file" accept=".json" style="display:none;">
+      <h2>💾 備份與還原</h2>
+      <p class="desc">行程與設定存在瀏覽器裡，換手機或清除瀏覽器資料就會不見。建議偶爾下載一份備份檔保存起來。</p>
+      <div style="display:flex; gap:8px;">
+        <button class="btn primary" id="btn-export-data" style="flex:1;">⬇️ 下載備份</button>
+        <label class="btn ghost" style="flex:1; text-align:center; cursor:pointer;">
+          ⬆️ 匯入備份
+          <input type="file" id="btn-import-data" accept=".json" style="display:none;">
         </label>
       </div>
       <div class="status-line" id="backup-status"></div>
@@ -385,11 +386,11 @@
 
 </main>
 
-<!-- 彈出式新增行程視窗 (Modal) -->
+<!-- 🚀 彈出式新增行程視窗 (Modal) -->
 <div class="modal-overlay" id="event-modal">
   <div class="modal-card">
     <div class="modal-title">
-      <span id="modal-date-title">📌 新增指定日期行程</span>
+      <span id="modal-date-title">📌 新增行程</span>
       <button class="modal-close" id="modal-close-btn">&times;</button>
     </div>
     <label>行程標題</label>
@@ -420,11 +421,13 @@
     {id:8,label:'第八節',start:'16:10',end:'17:00',isClass:true},
   ];
   const DAYNAMES = {1:'週一',2:'週二',3:'週三',4:'週四',5:'週五'};
+  
+  // 原本的資料，週三週四第8節為空(null)，這會導致畫面上呈現空白是正常的
   const WEEK = {
     1:{1:['國語文','陳姿穎'],2:['基礎電子實習','黃筱涓、吳育智'],3:['基礎電子實習','黃筱涓、吳育智'],4:['基礎電子實習','黃筱涓、吳育智'],5:['程式設計實習','黃筱涓、吳育智'],6:['程式設計實習','黃筱涓、吳育智'],7:['程式設計實習','黃筱涓、吳育智'],8:['數位電路選','張偉勤']},
     2:{1:['數位電路','張偉勤'],2:['數位電路','張偉勤'],3:['英語文','林宗平(外師)'],4:['英語文','林宗平(外師)'],5:['地理','邱坤豪'],6:['地理','邱坤豪'],7:['健康與護理','陸淑芬'],8:['基本電學選','吳育智']},
-    3:{1:['體育','莊佳容'],2:['體育','莊佳容'],3:['臺灣手語／閩南語文','范文芳、宋麗華'],4:['基本電學','吳育智'],5:['班會','林宗平'],6:['彈性學習時間',''],7:['團體活動時間','']},
-    4:{1:['數學','林佳良'],2:['數學','林佳良'],3:['基本電學','吳育智'],4:['基本電學','吳育智'],5:['作文','陳姿穎'],6:['物理','徐慧茵'],7:['物理','徐慧茵']},
+    3:{1:['體育','莊佳容'],2:['體育','莊佳容'],3:['臺灣手語／閩南語文','范文芳、宋麗華'],4:['基本電學','吳育智'],5:['班會','林宗平'],6:['彈性學習時間',''],7:['團體活動時間',''],8:null},
+    4:{1:['數學','林佳良'],2:['數學','林佳良'],3:['基本電學','吳育智'],4:['基本電學','吳育智'],5:['作文','陳姿穎'],6:['物理','徐慧茵'],7:['物理','徐慧茵'],8:null},
     5:{1:['國語文','陳姿穎'],2:['國語文','陳姿穎'],3:['美術','徐珮玲(美術教室)'],4:['美術','徐珮玲(美術教室)'],5:['數學','林佳良'],6:['數學','林佳良'],7:['英語聽講','林宗平'],8:['英文選','林宗平']},
   };
 
@@ -458,6 +461,11 @@
   let THEME_DARK = false;
   let currentCalDate = new Date();
   let selectedCalDateStr = null;
+
+  // 清理 Topic 名稱，防止複製到隱藏字元
+  function cleanTopic(s){
+    return (s || '').replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u2028\u2029\uFEFF\s]/g, '');
+  }
 
   async function getPersonal(key, fallback){
     if(HAS_CLAUDE_STORAGE){
@@ -495,7 +503,7 @@
     }catch(e){}
   }
   document.addEventListener('click', (e)=>{
-    if(e.target.closest('button')) playClick();
+    if(e.target.closest('button') || e.target.closest('.cal-cell')) playClick();
   }, true);
 
   function applyTheme(){
@@ -561,6 +569,7 @@
     return lines.join('\n');
   }
 
+  // 🔴 即時計算上課狀態
   function updateLiveStatus(){
     const now = new Date();
     const dow = now.getDay();
@@ -660,17 +669,18 @@
     $('#week-table').innerHTML = html;
   }
 
+  // 📅 月曆繪製邏輯
   function renderCalendar(){
     const year = currentCalDate.getFullYear();
     const month = currentCalDate.getMonth();
     $('#cal-month-title').textContent = `${year} 年 ${month + 1} 月`;
 
     const grid = $('#cal-grid');
-    grid.innerHTML = '';
+    let gridHtml = '';
 
     const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
     weekDays.forEach(wd => {
-      grid.innerHTML += `<div class="cal-day-head">${wd}</div>`;
+      gridHtml += `<div class="cal-day-head">${wd}</div>`;
     });
 
     const firstDay = new Date(year, month, 1);
@@ -689,7 +699,7 @@
     const prevMonthLastDay = new Date(year, month, 0).getDate();
     for (let i = startDayOfWeek - 1; i >= 0; i--) {
       const dNum = prevMonthLastDay - i;
-      grid.innerHTML += `<div class="cal-cell other-month"><span class="cal-num">${dNum}</span></div>`;
+      gridHtml += `<div class="cal-cell other-month"><span class="cal-num">${dNum}</span></div>`;
     }
 
     for (let d = 1; d <= totalDays; d++) {
@@ -708,28 +718,30 @@
         dotsHtml = '<div class="cal-dots">' + '<div class="cal-dot"></div>'.repeat(Math.min(evCount, 3)) + '</div>';
       }
 
-      const cell = document.createElement('div');
-      cell.className = `cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`;
-      cell.innerHTML = `<span class="cal-num">${d}</span>${dotsHtml}`;
-      
-      // 📌 綁定點擊事件直接彈出視窗
-      cell.addEventListener('click', (function(dateStr){
-        return function(){
-          selectedCalDateStr = dateStr;
-          openEventModal(dateStr);
-          renderCalendar();
-        };
-      })(dStr));
-
-      grid.appendChild(cell);
+      gridHtml += `<div class="cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" data-date="${dStr}">
+        <span class="cal-num">${d}</span>${dotsHtml}
+      </div>`;
     }
 
     const totalRendered = startDayOfWeek + totalDays;
     const remaining = (7 - (totalRendered % 7)) % 7;
     for (let i = 1; i <= remaining; i++) {
-      grid.innerHTML += `<div class="cal-cell other-month"><span class="cal-num">${i}</span></div>`;
+      gridHtml += `<div class="cal-cell other-month"><span class="cal-num">${i}</span></div>`;
     }
+
+    grid.innerHTML = gridHtml;
   }
+
+  // 🚀 事件代理：點擊月曆格子彈出輸入視窗
+  $('#cal-grid').addEventListener('click', (e) => {
+    const cell = e.target.closest('.cal-cell[data-date]');
+    if(!cell) return;
+    const dStr = cell.dataset.date;
+    
+    selectedCalDateStr = dStr;
+    renderCalendar(); // 更新選取狀態的顏色
+    openEventModal(dStr); // 開啟彈出視窗
+  });
 
   $('#cal-prev').addEventListener('click', () => {
     currentCalDate.setMonth(currentCalDate.getMonth() - 1);
@@ -740,11 +752,11 @@
     renderCalendar();
   });
 
-  // 彈出視窗控制
+  // --- 彈出視窗 (Modal) 控制邏輯 ---
   const modal = $('#event-modal');
   function openEventModal(dateStr){
     $('#modal-date-input').value = dateStr;
-    $('#modal-date-title').textContent = `📌 新增 ${dateStr} 行程與推播`;
+    $('#modal-date-title').textContent = `📌 新增 ${dateStr} 行程`;
     $('#modal-title-input').value = '';
     $('#modal-note-input').value = '';
     $('#modal-status').className = 'status-line';
@@ -752,6 +764,8 @@
   }
   function closeEventModal(){
     modal.classList.remove('open');
+    selectedCalDateStr = null; // 關閉時取消月曆的高亮選取
+    renderCalendar();
   }
   $('#modal-close-btn').addEventListener('click', closeEventModal);
   modal.addEventListener('click', (e)=>{ if(e.target === modal) closeEventModal(); });
@@ -769,15 +783,17 @@
     const now = Date.now();
     const diff = ts - now;
     const THREE_DAYS = 3*24*60*60*1000 - 60*1000;
+    
+    // 排定 Ntfy 推播
     if(diff > 0 && diff <= THREE_DAYS && TOPIC){
       try{
         await publish(TOPIC, {title:'📌 '+title, body: note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
         ev.scheduled = true; ev.scheduledAt = now;
       }catch(e){ console.error(e); }
     }
+    
     EVENTS.push(ev);
     await setVal('calendar-events', EVENTS);
-    renderCalendar();
     renderEvents();
     closeEventModal();
   });
@@ -788,7 +804,7 @@
     const sorted = filtered.sort((a,b)=> a.ts - b.ts);
 
     if(sorted.length === 0){
-      list.innerHTML = `<div class="empty-state">還沒有新增任何行程（點上方日曆日期即可新增）</div>`;
+      list.innerHTML = `<div class="empty-state">還沒有新增任何行程（點擊上方日期格子即可新增）</div>`;
       return;
     }
 
@@ -799,7 +815,7 @@
         <div class="ev-date"><div class="d">${d.getDate()}</div><div class="m">${d.getMonth()+1} 月</div></div>
         <div class="ev-body">
           <div class="ev-title">${escapeHtml(ev.title)}</div>
-          <div class="ev-meta">${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}　${ev.note?escapeHtml(ev.note):''}</div>
+          <div class="ev-meta">${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}　${ev.note?escapeHtml(ev.note):''}</div>
           ${status}
         </div>
         <div class="ev-actions">
@@ -828,7 +844,7 @@
       const diff = ev.ts - now;
       if(diff > 0 && diff <= THREE_DAYS && TOPIC){
         try{
-          await publish(TOPIC, {title:'📌 '+title, body: ev.note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
+          await publish(TOPIC, {title:'📌 '+ev.title, body: ev.note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
           ev.scheduled = true; ev.scheduledAt = now;
           changed = true;
         }catch(e){ console.error(e); }
@@ -865,7 +881,8 @@
   $$('nav button').forEach(b=> b.addEventListener('click', ()=> switchView(b.dataset.view)));
 
   $('#btn-save-topic').addEventListener('click', async ()=>{
-    TOPIC = $('#set-topic').value.trim();
+    TOPIC = cleanTopic($('#set-topic').value);
+    $('#set-topic').value = TOPIC;
     await setVal('ntfy-topic', TOPIC);
     showStatus('#set-status', TOPIC ? '已儲存主題：'+TOPIC : '請輸入主題名稱', TOPIC?'ok':'err');
   });
@@ -913,49 +930,52 @@
     });
   });
 
-  // 💾 備份與還原功能（支援新舊版欄位格式兼容）
-  $('#btn-export').addEventListener('click', ()=>{
-    const data = {
-      topic: TOPIC,
-      events: EVENTS
+  // --- 💾 備份與還原邏輯 (支援新舊格式智慧讀取) ---
+  $('#btn-export-data').addEventListener('click', ()=>{
+    const backup = {
+      'ntfy-topic': TOPIC,
+      'calendar-events': EVENTS,
+      'exportedAt': new Date().toISOString()
     };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'schedule-backup-' + new Date().toISOString().split('T')[0] + '.json';
+    const dstr = new Date().toISOString().split('T')[0];
+    a.download = `課表控制台備份_${dstr}.json`;
     a.click();
-    showStatus('#backup-status', '備份檔案已成功下載！', 'ok');
+    URL.revokeObjectURL(url);
+    showStatus('#backup-status', '備份已下載！', 'ok');
   });
 
-  $('#import-file').addEventListener('change', (e)=>{
+  $('#btn-import-data').addEventListener('change', (e)=>{
     const file = e.target.files[0];
     if(!file) return;
     const reader = new FileReader();
-    reader.onload = async (event)=>{
+    reader.onload = async (evt)=>{
       try{
-        const parsed = JSON.parse(event.target.result);
+        const data = JSON.parse(evt.target.result);
         
-        // 兼容新舊版備份格式 (topic 或 ntfyTopic)
-        const loadedTopic = parsed.topic || parsed.ntfyTopic;
-        if(loadedTopic !== undefined){
-          TOPIC = loadedTopic;
-          $('#set-topic').value = TOPIC;
+        // 智慧讀取：相容舊版 ntfyTopic 或新版 ntfy-topic
+        const importedTopic = data.ntfyTopic || data['ntfy-topic'] || data.topic;
+        if(typeof importedTopic === 'string'){
+          TOPIC = cleanTopic(importedTopic);
           await setVal('ntfy-topic', TOPIC);
+          $('#set-topic').value = TOPIC;
         }
-        
-        // 兼容新舊版備份格式 (events 或 calendarEvents)
-        const loadedEvents = parsed.events || parsed.calendarEvents;
-        if(loadedEvents && Array.isArray(loadedEvents)){
-          EVENTS = loadedEvents;
+
+        // 智慧讀取：相容舊版 calendarEvents 或新版 calendar-events
+        const importedEvents = data.calendarEvents || data['calendar-events'] || data.events;
+        if(Array.isArray(importedEvents)){
+          EVENTS = importedEvents;
           await setVal('calendar-events', EVENTS);
         }
-        
+
         renderCalendar();
         renderEvents();
-        showStatus('#backup-status', '備份還原成功！', 'ok');
+        showStatus('#backup-status', '匯入成功！資料已還原。', 'ok');
       }catch(err){
-        showStatus('#backup-status', '檔案格式錯誤，還原失敗', 'err');
+        showStatus('#backup-status', '匯入失敗，檔案格式不正確', 'err');
       }
     };
     reader.readAsText(file);
@@ -968,7 +988,8 @@
   }
 
   (async function init(){
-    TOPIC = await getVal('ntfy-topic', '');
+    TOPIC = cleanTopic(await getVal('ntfy-topic', ''));
+    await setVal('ntfy-topic', TOPIC);
     EVENTS = await getVal('calendar-events', []);
     THEME_DARK = await getPersonal('theme-dark', false);
     SOUND_ON = await getPersonal('sound-on', true);
