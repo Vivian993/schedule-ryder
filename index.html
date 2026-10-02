@@ -30,25 +30,21 @@
     --line:#D3D8C7;
     --muted:#5B6459;
     --dot:rgba(22,35,28,0.06);
-    --break-bg:#F5F3EC;
-    --break-ink:#9AA292;
   }
   body.theme-dark{
-    --ink:#EAEDE4;
-    --deep:#0A0F14;
-    --board:#10151B;
-    --board-2:#181F27;
-    --surface:#171E26;
+    --ink:#F2F5EE;
+    --deep:#080D12;
+    --board:#0E141C;
+    --board-2:#161F29;
+    --surface:#1A232F;
     --copper:#E0A458;
-    --copper-light:#F0C68B;
-    --green:#4C8F6B;
-    --green-dark:#2E5B44;
+    --copper-light:#F5C284;
+    --green:#529E75;
+    --green-dark:#316349;
     --warn:#E2685A;
-    --line:#2A323C;
-    --muted:#9CA8A0;
-    --dot:rgba(234,237,228,0.05);
-    --break-bg:#1E2630;
-    --break-ink:#7C8A93;
+    --line:#2C3746;
+    --muted:#BAC7BE;
+    --dot:rgba(242,245,238,0.06);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -104,7 +100,7 @@
   }
   .chip::before{left:-6px;} .chip::after{right:-6px;}
   h1{color:#fff;font-size:17px;margin:0;font-weight:700;letter-spacing:.02em;}
-  .sub{color:#9FB0A2;font-size:11.5px;margin-top:2px;}
+  .sub{color:#BAC7BE;font-size:11.5px;margin-top:2px;}
   nav{display:flex; gap:6px; padding:0 14px 14px;}
   nav button{
     flex:1; appearance:none; border:1px solid rgba(255,255,255,0.14);
@@ -125,8 +121,7 @@
     padding:16px; margin-bottom:16px;
     box-shadow:0 1px 0 rgba(22,35,28,0.03);
   }
-  #add-event-card{ scroll-margin-top:160px; }
-  .card h2{margin:0 0 4px; font-size:15px; display:flex; align-items:center; gap:8px;}
+  .card h2{margin:0 0 4px; font-size:15px; display:flex; align-items:center; gap:8px; color:var(--ink);}
   .card .desc{color:var(--muted); font-size:12.5px; margin:0 0 14px; line-height:1.6;}
 
   .today-banner{
@@ -134,52 +129,39 @@
     background:linear-gradient(135deg,var(--green-dark),var(--green));
     color:#fff; border-radius:14px; padding:16px 18px; margin-bottom:16px;
   }
-  .today-banner .lab{font-size:11.5px; color:#B9D4C1; letter-spacing:.06em;}
+  .today-banner .lab{font-size:11.5px; color:#D0E8D9; letter-spacing:.06em;}
   .today-banner .day{font-size:20px; font-weight:700; margin-top:2px;}
-  .today-banner .cnt{font-size:11.5px; color:#B9D4C1; text-align:right;}
+  .today-banner .cnt{font-size:11.5px; color:#D0E8D9; text-align:right;}
   .today-banner .cnt b{display:block; font-size:22px; color:#fff; font-family:'Space Grotesk';}
 
-  .next-class-bar{
-    display:flex; align-items:center; gap:10px;
-    background:var(--surface); border:1px solid var(--line);
-    border-radius:12px; padding:12px 14px; margin-top:12px;
-    font-size:12.5px;
+  /* 即時上課狀態橫幅 */
+  .live-status-box{
+    background:linear-gradient(135deg,#7A4A0E,#B5651D);
+    color:#fff; border-radius:12px; padding:12px 16px; margin-bottom:16px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-size:13.5px; font-weight:600;
   }
-  .next-class-bar .nc-icon{font-size:18px; flex:none;}
-  .next-class-bar .nc-text{flex:1; min-width:0;}
-  .next-class-bar .nc-period{
-    display:inline-block; font-size:10.5px; font-weight:700; color:var(--copper);
-    background:var(--board-2); padding:1px 7px; border-radius:20px; margin-bottom:3px;
-  }
-  .next-class-bar .nc-title{font-weight:700; font-size:14px; color:var(--ink);}
-  .next-class-bar .nc-sub{color:var(--muted); font-size:11.5px; margin-top:2px; font-weight:500;}
-  .next-class-bar .nc-time{
-    flex:none; font-family:'Space Grotesk'; font-weight:700; font-size:15px;
-    background:var(--board-2); color:var(--ink); padding:5px 10px; border-radius:8px;
-  }
-  .cal-select-hint{
-    text-align:center; font-size:12px; color:var(--copper); font-weight:700;
-    margin-top:10px; padding:8px; background:var(--board-2); border-radius:8px;
-  }
+  .live-status-box.free{background:linear-gradient(135deg,var(--green-dark),var(--green));}
 
   .grid-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:12px;}
   table{border-collapse:collapse; width:100%; min-width:640px; font-size:12.5px;}
-  th,td{border:1px solid var(--line); padding:7px 6px; text-align:center; vertical-align:middle;}
-  thead th{background:var(--deep); color:#fff; font-weight:600; padding:9px 6px;}
+  th,td{border:1px solid var(--line); padding:8px 6px; text-align:center; vertical-align:middle; color:var(--ink);}
+  thead th{background:var(--deep); color:#fff; font-weight:600; padding:10px 6px;}
   thead th.wk-active{background:var(--copper); color:#1a1208;}
-  tbody th{background:var(--board-2); font-weight:600; white-space:nowrap; font-size:11.5px;}
+  tbody th{background:var(--board-2); font-weight:600; white-space:nowrap; font-size:11.5px; color:var(--ink);}
   tbody th .time{display:block; font-family:'IBM Plex Mono'; font-size:10px; color:var(--muted); font-weight:400;}
   td.cell{font-weight:500;}
   td.cell .t{display:block; font-size:10.5px; color:var(--muted); font-weight:400; margin-top:1px;}
-  td.empty{color:#C3C9BB;}
-  tr.break td, tr.break th{background:var(--break-bg); color:var(--break-ink); font-size:11px;}
-  td.cell.today-col{background:#FBF3E9;}
-  body.theme-dark td.cell.today-col{background:#26241A;}
+  td.empty{color:var(--muted);}
+  tr.break td, tr.break th{background:var(--board-2); color:var(--muted); font-size:11px;}
+  body.theme-dark tr.break td, body.theme-dark tr.break th{background:#111720; color:var(--muted);}
+  td.cell.today-col{background:rgba(181,101,29,0.12);}
 
+  /* 📅 月曆樣式 */
   .cal-header{
     display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
   }
-  .cal-header h3{margin:0; font-size:16px; font-family:'Space Grotesk', sans-serif;}
+  .cal-header h3{margin:0; font-size:16px; font-family:'Space Grotesk', sans-serif; color:var(--ink);}
   .cal-grid{
     display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; text-align:center;
   }
@@ -187,18 +169,34 @@
     font-size:11px; font-weight:700; color:var(--muted); padding:6px 0;
   }
   .cal-cell{
-    min-height:48px; border-radius:8px; padding:4px 2px; position:relative;
+    min-height:50px; border-radius:8px; padding:6px 2px; position:relative;
     background:var(--board-2); border:1px solid transparent; cursor:pointer;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
   }
-  .cal-cell.other-month{opacity:0.35; background:transparent;}
+  .cal-cell.other-month{opacity:0.3; background:transparent;}
   .cal-cell.today{border-color:var(--copper); font-weight:700;}
   .cal-cell.selected{background:var(--copper); color:#1a1208;}
+  .cal-num{font-size:13px; font-family:'Space Grotesk'; color:var(--ink);}
   .cal-cell.selected .cal-num{color:#1a1208;}
-  .cal-num{font-size:13px; font-family:'Space Grotesk';}
   .cal-dots{display:flex; gap:2px; margin-top:4px;}
   .cal-dot{width:4px; height:4px; border-radius:50%; background:var(--copper);}
   .cal-cell.selected .cal-dot{background:#1a1208;}
+
+  /* 彈出互動視窗 (Modal) */
+  .modal-overlay{
+    position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);
+    display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .modal-overlay.open{opacity:1; pointer-events:auto;}
+  .modal-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    width:100%; max-width:420px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    transform:translateY(10px); transition:transform .2s;
+  }
+  .modal-overlay.open .modal-card{transform:translateY(0);}
+  .modal-title{font-size:16px; font-weight:700; margin:0 0 14px; display:flex; justify-content:space-between; align-items:center; color:var(--ink);}
+  .modal-close{background:none; border:none; font-size:22px; cursor:pointer; color:var(--muted);}
 
   .ev-item{
     display:flex; gap:12px; padding:12px 4px; border-bottom:1px solid var(--line);
@@ -207,23 +205,20 @@
   .ev-date{
     flex:none; width:52px; text-align:center; font-family:'Space Grotesk';
   }
-  .ev-date .d{font-size:20px; font-weight:700; line-height:1;}
+  .ev-date .d{font-size:20px; font-weight:700; line-height:1; color:var(--ink);}
   .ev-date .m{font-size:10.5px; color:var(--muted);}
   .ev-body{flex:1; min-width:0;}
-  .ev-title{font-weight:600; font-size:14px;}
+  .ev-title{font-weight:600; font-size:14px; color:var(--ink);}
   .ev-meta{font-size:11.5px; color:var(--muted); margin-top:2px;}
-  .ev-status{font-size:10.5px; padding:2px 7px; border-radius:20px; display:inline-block; margin-top:6px; margin-right:5px;}
+  .ev-status{font-size:10.5px; padding:2px 7px; border-radius:20px; display:inline-block; margin-top:6px;}
   .st-scheduled{background:#E4F1E8; color:var(--green-dark);}
   .st-far{background:#FBEFE0; color:var(--copper);}
-  .st-countdown{background:var(--board-2); color:var(--ink); font-weight:700;}
-  .st-countdown.today{background:var(--copper); color:#1a1208;}
   .ev-actions{flex:none; display:flex; flex-direction:column; gap:6px;}
 
   input,textarea,select{
     width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 10px;
-    font-family:inherit; font-size:13.5px; background:#FCFCFA; color:var(--ink);
+    font-family:inherit; font-size:13.5px; background:var(--board-2); color:var(--ink);
   }
-  body.theme-dark input, body.theme-dark textarea, body.theme-dark select{background:#10151B;}
   input:focus,textarea:focus,select:focus{outline:2px solid var(--copper-light); border-color:var(--copper);}
   label{font-size:12px; color:var(--muted); display:block; margin:10px 0 4px;}
   label:first-child{margin-top:0;}
@@ -244,22 +239,15 @@
   .status-line.ok{display:block; background:#E4F1E8; color:var(--green-dark);}
   .status-line.err{display:block; background:#FBE7E3; color:var(--warn);}
 
-  .cron-card{border:1px dashed var(--line); border-radius:10px; padding:12px; margin-top:10px;}
-  .cron-card h3{margin:0 0 8px; font-size:13px; display:flex; justify-content:space-between; align-items:center;}
+  .cron-card{border:1px dashed var(--line); border-radius:10px; padding:12px; margin-top:10px; background:var(--board-2);}
+  .cron-card h3{margin:0 0 8px; font-size:13px; display:flex; justify-content:space-between; align-items:center; color:var(--ink);}
   .kv{display:flex; gap:8px; align-items:flex-start; margin-bottom:6px; font-size:12px;}
   .kv .k{flex:none; width:52px; color:var(--muted); font-family:'IBM Plex Mono'; font-size:10.5px; padding-top:6px;}
-  .kv .v{flex:1; background:#F5F3EC; border-radius:6px; padding:6px 8px; font-family:'IBM Plex Mono'; font-size:11.5px; word-break:break-all; position:relative;}
-  body.theme-dark .kv .v{background:#1E2630; color:var(--ink);}
+  .kv .v{flex:1; background:var(--surface); border-radius:6px; padding:6px 8px; font-family:'IBM Plex Mono'; font-size:11.5px; word-break:break-all; position:relative; color:var(--ink);}
   .copybtn{position:absolute; top:4px; right:4px; font-size:10px; padding:3px 7px;}
 
   .empty-state{text-align:center; padding:20px 10px; color:var(--muted); font-size:13px;}
   .warn-box{background:#FBEFE0; border:1px solid #EFD9B3; color:#7A4A0E; border-radius:10px; padding:10px 12px; font-size:12px; line-height:1.6; margin-bottom:14px;}
-  body.theme-dark .warn-box{background:#241D0F; border-color:#4A3A1C; color:#F0C68B;}
-
-  @keyframes pulseGlow{
-    0%,100%{opacity:1;} 50%{opacity:.55;}
-  }
-  .nc-icon.nc-live{animation:pulseGlow 1.6s ease-in-out infinite;}
 </style>
 </head>
 <body>
@@ -273,7 +261,7 @@
       <div class="chip"></div>
       <div>
         <h1>課表控制台</h1>
-        <div class="sub">電子科．每天 17:00 自動送出明天的課</div>
+        <div class="sub">電子科．每天 18:00 自動送出明天的課</div>
       </div>
     </div>
     <div class="header-toggles">
@@ -304,7 +292,10 @@
       <div class="cnt"><span id="home-count-lab">今天堂數</span><b id="home-count">0</b></div>
     </div>
 
-    <div id="next-class-wrap"></div>
+    <!-- 即時上課狀態橫幅 -->
+    <div class="live-status-box" id="live-status-box">
+      <span id="live-status-text">⏳ 正在計算目前上課進度...</span>
+    </div>
 
     <div class="card">
       <h2>📖 今日課表</h2>
@@ -341,29 +332,11 @@
         <button class="btn small ghost" id="cal-next">下個月 ▶</button>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
-      <div id="cal-select-hint"></div>
-    </div>
-
-    <div class="card" id="add-event-card">
-      <h2>➕ 新增行程</h2>
-      <p class="desc">例如段考、模擬考、繳費、社團活動。點選上方月曆的某一天會自動帶入日期，再填時間即可。若日期在 3 天內，系統會排定 ntfy 預約發送；超過 3 天的話，App 打開時會自動補排。</p>
-      <label>標題</label>
-      <input type="text" id="ev-title" placeholder="例如：第一次段考">
-      <div class="row2">
-        <div><label>日期</label><input type="date" id="ev-date"></div>
-        <div><label>時間</label><input type="time" id="ev-time" value="18:00"></div>
-      </div>
-      <label>備註（選填）</label>
-      <input type="text" id="ev-note" placeholder="例如：記得帶尺、計算機">
-      <button class="btn primary" id="btn-add-event" style="margin-top:14px;">加入行事曆並排定通知</button>
-      <div class="status-line" id="ev-status"></div>
+      <p style="font-size:11.5px; color:var(--muted); text-align:center; margin-top:10px;">💡 提示：點擊上方月曆任一日期格子，即可直接彈出視窗新增行程與自訂推播時間！</p>
     </div>
 
     <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-        <h2 id="ev-list-title" style="margin:0;">📌 行程列表</h2>
-        <button class="btn small ghost" id="btn-toggle-all-events">顯示全部行程</button>
-      </div>
+      <h2 id="ev-list-title">📌 全部行程列表</h2>
       <div id="ev-list"></div>
     </div>
   </section>
@@ -387,50 +360,57 @@
     </div>
 
     <div class="card">
-      <h2>⏰ 每天 17:00 自動傳送（超簡單設定法）</h2>
+      <h2>⏰ 每天 18:00 自動傳送（一鍵發送專屬網址）</h2>
       <p class="desc">
-        只要到 <a href="https://cron-job.org" target="_blank" style="color:var(--copper);">cron-job.org</a> 新增 Job，在 **URL** 欄位直接貼上下方為您組合好的「完整網址」即可，不需要再填寫 Headers 或 Body！
+        點擊下方按鈕可產生週一至週五專屬網址，直接複製貼到 <a href="https://cron-job.org" target="_blank" style="color:var(--copper);">cron-job.org</a> 的 URL 欄位即可！
       </p>
       <button class="btn primary" id="btn-gen-cron">產生一鍵發送專屬網址</button>
       <div id="cron-output"></div>
-    </div>
-
-    <div class="card">
-      <h2>💾 備份與還原</h2>
-      <p class="desc">行程與設定存在瀏覽器裡，換手機或清除瀏覽器資料就會不見。建議偶爾下載一份備份檔保存起來。</p>
-      <div style="display:flex; gap:8px;">
-        <button class="btn primary" id="btn-export-data" style="flex:1;">⬇️ 下載備份</button>
-        <label class="btn ghost" style="flex:1; text-align:center; cursor:pointer;">
-          ⬆️ 匯入備份
-          <input type="file" id="btn-import-data" accept=".json" style="display:none;">
-        </label>
-      </div>
-      <div class="status-line" id="backup-status"></div>
     </div>
   </section>
 
 </main>
 
+<!-- 彈出式新增行程視窗 (Modal) -->
+<div class="modal-overlay" id="event-modal">
+  <div class="modal-card">
+    <div class="modal-title">
+      <span id="modal-date-title">📌 新增指定日期行程</span>
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+    </div>
+    <label>行程標題</label>
+    <input type="text" id="modal-title-input" placeholder="例如：第一次段考、模擬考">
+    <div class="row2">
+      <div><label>日期</label><input type="date" id="modal-date-input"></div>
+      <div><label>推播提醒時間</label><input type="time" id="modal-time-input" value="18:00"></div>
+    </div>
+    <label>備註（選填）</label>
+    <input type="text" id="modal-note-input" placeholder="例如：記得帶計算機、尺">
+    <button class="btn primary" id="modal-save-btn" style="margin-top:16px; width:100%;">儲存並排定推播</button>
+    <div class="status-line" id="modal-status"></div>
+  </div>
+</div>
+
 <script>
 (function(){
-  const PERIODS = [
-    {id:'z',label:'早自習',time:'07:30–07:50',isClass:false},
-    {id:1,label:'第一節',time:'08:10–09:00'},
-    {id:2,label:'第二節',time:'09:10–10:00'},
-    {id:3,label:'第三節',time:'10:10–11:00'},
-    {id:4,label:'第四節',time:'11:10–12:00'},
-    {id:'l',label:'午休',time:'12:00–13:10',isClass:false},
-    {id:5,label:'第五節',time:'13:10–14:00'},
-    {id:6,label:'第六節',time:'14:10–15:00'},
-    {id:7,label:'第七節',time:'15:15–16:05'},
-    {id:8,label:'第八節',time:'16:10–17:00'},
+  const PERIODS_DEF = [
+    {id:'z',label:'早自習',start:'07:30',end:'07:50',isClass:false},
+    {id:1,label:'第一節',start:'08:10',end:'09:00',isClass:true},
+    {id:2,label:'第二節',start:'09:10',end:'10:00',isClass:true},
+    {id:3,label:'第三節',start:'10:10',end:'11:00',isClass:true},
+    {id:4,label:'第四節',start:'11:10',end:'12:00',isClass:true},
+    {id:'l',label:'午休',start:'12:00',end:'13:10',isClass:false},
+    {id:5,label:'第五節',start:'13:10',end:'14:00',isClass:true},
+    {id:6,label:'第六節',start:'14:10',end:'15:00',isClass:true},
+    {id:7,label:'第七節',start:'15:15',end:'16:05',isClass:true},
+    {id:8,label:'第八節',start:'16:10',end:'17:00',isClass:true},
   ];
   const DAYNAMES = {1:'週一',2:'週二',3:'週三',4:'週四',5:'週五'};
   const WEEK = {
     1:{1:['國語文','陳姿穎'],2:['基礎電子實習','黃筱涓、吳育智'],3:['基礎電子實習','黃筱涓、吳育智'],4:['基礎電子實習','黃筱涓、吳育智'],5:['程式設計實習','黃筱涓、吳育智'],6:['程式設計實習','黃筱涓、吳育智'],7:['程式設計實習','黃筱涓、吳育智'],8:['數位電路選','張偉勤']},
     2:{1:['數位電路','張偉勤'],2:['數位電路','張偉勤'],3:['英語文','林宗平(外師)'],4:['英語文','林宗平(外師)'],5:['地理','邱坤豪'],6:['地理','邱坤豪'],7:['健康與護理','陸淑芬'],8:['基本電學選','吳育智']},
-    3:{1:['體育','莊佳容'],2:['體育','莊佳容'],3:['臺灣手語／閩南語文','范文芳、宋麗華'],4:['基本電學','吳育智'],5:['班會','林宗平'],6:['彈性學習時間',''],7:['團體活動時間',''],8:null},
-    4:{1:['數學','林佳良'],2:['數學','林佳良'],3:['基本電學','吳育智'],4:['基本電學','吳育智'],5:['作文','陳姿穎'],6:['物理','徐慧茵'],7:['物理','徐慧茵'],8:null},
+    3:{1:['體育','莊佳容'],2:['體育','莊佳容'],3:['臺灣手語／閩南語文','范文芳、宋麗華'],4:['基本電學','吳育智'],5:['班會','林宗平'],6:['彈性學習時間',''],7:['團體活動時間','']},
+    4:{1:['數學','林佳良'],2:['數學','林佳良'],3:['基本電學','吳育智'],4:['基本電學','吳育智'],5:['作文','陳姿穎'],6:['物理','徐慧茵'],7:['物理','徐慧茵']},
     5:{1:['國語文','陳姿穎'],2:['國語文','陳姿穎'],3:['美術','徐珮玲(美術教室)'],4:['美術','徐珮玲(美術教室)'],5:['數學','林佳良'],6:['數學','林佳良'],7:['英語聽講','林宗平'],8:['英文選','林宗平']},
   };
 
@@ -442,7 +422,7 @@
 
   async function getVal(key, fallback){
     if(HAS_CLAUDE_STORAGE){
-      try{ const r = await window.storage.get(key, false); return r ? JSON.parse(r.value) : fallback; }
+      try{ const r = await window.storage.get(key, true); return r ? JSON.parse(r.value) : fallback; }
       catch(e){ return fallback; }
     }
     try{
@@ -452,7 +432,7 @@
   }
   async function setVal(key, val){
     if(HAS_CLAUDE_STORAGE){
-      try{ await window.storage.set(key, JSON.stringify(val), false); }catch(e){ console.error(e); }
+      try{ await window.storage.set(key, JSON.stringify(val), true); }catch(e){ console.error(e); }
       return;
     }
     try{ localStorage.setItem(LS_PREFIX + key, JSON.stringify(val)); }catch(e){ console.error(e); }
@@ -463,11 +443,6 @@
   let SOUND_ON = true;
   let THEME_DARK = false;
   let currentCalDate = new Date();
-  // 清除主題名稱裡任何看不見的隱藏字元（行分隔符、零寬字元、控制字元等），
-  // 避免貼上/匯入時混入這些字元，導致 ntfy 網址失效（404）
-  function cleanTopic(s){
-    return (s || '').replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u2028\u2029\uFEFF\s]/g, '');
-  }
   let selectedCalDateStr = null;
 
   async function getPersonal(key, fallback){
@@ -557,11 +532,11 @@
     const day = WEEK[dow];
     if(!day) return [];
     const lines = [];
-    for(const p of PERIODS){
+    for(const p of PERIODS_DEF){
       if(p.isClass === false){ continue; }
       const info = day[p.id];
       if(!info || !info[0]) continue;
-      lines.push(`${p.label} ${p.time}｜${info[0]}${info[1] ? '（'+info[1]+'）':''}`);
+      lines.push(`${p.label} ${p.start}–${p.end}｜${info[0]}${info[1] ? '（'+info[1]+'）':''}`);
     }
     return lines;
   }
@@ -572,113 +547,48 @@
     return lines.join('\n');
   }
 
-  // ---------- 新增：計算目前/下一堂課 ----------
-  function parseTimeRange(timeStr){
-    // "08:10–09:00" -> {startMin, endMin}
-    const parts = timeStr.split(/[–-]/);
-    const toMin = t => { const [h,m] = t.trim().split(':').map(Number); return h*60+m; };
-    return { startMin: toMin(parts[0]), endMin: toMin(parts[1]) };
-  }
-
-  function getNextClassInfo(){
+  function updateLiveStatus(){
     const now = new Date();
     const dow = now.getDay();
-    const nowMin = now.getHours()*60 + now.getMinutes();
-    const day = WEEK[dow];
+    const box = $('#live-status-box');
+    const textEl = $('#live-status-text');
 
-    // 找今天正在上的課，或是今天接下來的課
-    if(day){
-      for(const p of PERIODS){
-        const info = day[p.id];
-        const {startMin, endMin} = parseTimeRange(p.time);
-        const label = (p.isClass === false) ? p.label : (info && info[0] ? info[0] : null);
-        if(nowMin >= startMin && nowMin <= endMin){
-          if(p.isClass === false){
-            return {status:'break', label:p.label, endMin, nowMin, periodLabel:p.label};
-          }
-          if(label){
-            return {status:'ongoing', label, teacher: info[1]||'', endMin, nowMin, periodLabel:p.label};
-          }
+    if(dow === 0 || dow === 6 || !WEEK[dow]){
+      box.className = 'live-status-box free';
+      textEl.textContent = '🌴 今天是週末假期，好好放鬆休息！';
+      return;
+    }
+
+    const curHM = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    let currentPeriodName = null;
+
+    for(const p of PERIODS_DEF){
+      if(curHM >= p.start && curHM <= p.end){
+        if(p.isClass){
+          const info = WEEK[dow][p.id];
+          currentPeriodName = info && info[0] ? `${p.label}：${info[0]}${info[1]?' ('+info[1]+')':''}` : p.label;
+        } else {
+          currentPeriodName = `目前時段：${p.label} (${p.start}–${p.end})`;
         }
-        if(nowMin < startMin){
-          if(p.isClass === false){ continue; } // 早自習/午休不算「下一堂課」
-          if(info && info[0]){
-            return {status:'upcoming', label:info[0], teacher: info[1]||'', startMin, nowMin, periodLabel:p.label};
-          }
-        }
+        break;
       }
     }
 
-    // 今天沒有更多課了，找之後最近一個上課日的第一堂課
-    for(let add=1; add<=7; add++){
-      const future = new Date(now); future.setDate(future.getDate()+add);
-      const fDow = future.getDay();
-      const fDay = WEEK[fDow];
-      if(!fDay) continue;
-      for(const p of PERIODS){
-        if(p.isClass === false) continue;
-        const info = fDay[p.id];
-        if(info && info[0]){
-          const {startMin} = parseTimeRange(p.time);
-          return {status:'future', label:info[0], teacher: info[1]||'', dayLabel: DAYNAMES[fDow], startMin, daysAway: add, periodLabel:p.label};
-        }
+    if(currentPeriodName){
+      box.className = 'live-status-box';
+      textEl.textContent = `🔴 正在進行中 ➔ ${currentPeriodName}`;
+    } else {
+      if(curHM < '07:30'){
+        box.className = 'live-status-box free';
+        textEl.textContent = '🌅 尚未上學，祝今天有個美好的一天！';
+      } else if(curHM > '17:00'){
+        box.className = 'live-status-box free';
+        textEl.textContent = '🌙 今日課程已全部結束，辛苦囉！';
+      } else {
+        box.className = 'live-status-box free';
+        textEl.textContent = '☕ 目前為下課休息時間';
       }
     }
-    return null;
-  }
-
-  function fmtMinToHM(min){
-    const h = Math.floor(min/60), m = min%60;
-    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-  }
-  function fmtCountdown(diffMin){
-    if(diffMin < 60) return `${diffMin} 分後`;
-    const h = Math.floor(diffMin/60), m = diffMin%60;
-    return m>0 ? `${h} 小時 ${m} 分後` : `${h} 小時後`;
-  }
-
-  function renderNextClass(){
-    const wrap = document.getElementById('next-class-wrap');
-    const info = getNextClassInfo();
-    if(!info){ wrap.innerHTML = ''; return; }
-
-    let icon='📚', title='', sub='', timeText='';
-    if(info.status === 'ongoing'){
-      icon='🟢';
-      title = `${info.periodLabel}：${info.label}`;
-      sub = info.teacher ? info.teacher : '';
-      timeText = fmtCountdown(info.endMin - info.nowMin) + '下課';
-    } else if(info.status === 'break'){
-      icon='☕';
-      title = info.periodLabel;
-      sub = '休息一下';
-      timeText = fmtCountdown(info.endMin - info.nowMin) + '結束';
-    } else if(info.status === 'upcoming'){
-      icon='⏭️';
-      title = `${info.periodLabel}：${info.label}`;
-      sub = info.teacher ? info.teacher : '';
-      timeText = fmtCountdown(info.startMin - info.nowMin);
-    } else if(info.status === 'future'){
-      icon='📅';
-      title = `${info.periodLabel}：${info.label}`;
-      sub = `${info.dayLabel} ${fmtMinToHM(info.startMin)}`;
-      timeText = info.daysAway===1 ? '明天' : `${info.daysAway} 天後`;
-    }
-
-    const statusLabel = info.status === 'ongoing' ? '目前上課'
-                       : info.status === 'break' ? '目前'
-                       : info.status === 'upcoming' ? '下一堂'
-                       : '下一堂';
-
-    wrap.innerHTML = `<div class="next-class-bar">
-      <div class="nc-icon${info.status==='ongoing'?' nc-live':''}">${icon}</div>
-      <div class="nc-text">
-        <span class="nc-period">${escapeHtml(statusLabel)}</span>
-        <div class="nc-title">${escapeHtml(title)}</div>
-        ${sub ? `<div class="nc-sub">${escapeHtml(sub)}</div>` : ''}
-      </div>
-      <div class="nc-time">${timeText}</div>
-    </div>`;
   }
 
   function renderHome(){
@@ -694,7 +604,7 @@
     const tmrLines = dayScheduleLines(tmrDow);
     $('#home-tomorrow-list').innerHTML = listHtml(tmrLines, tmrDow);
 
-    renderNextClass();
+    updateLiveStatus();
   }
   function fmtDate(d){ return `${d.getMonth()+1}/${d.getDate()}`; }
   function listHtml(lines, dow){
@@ -716,14 +626,14 @@
       html += `<th class="${d===todayDow?'wk-active':''}">${DAYNAMES[d]}</th>`;
     }
     html += '</tr></thead><tbody>';
-    for(const p of PERIODS){
+    for(const p of PERIODS_DEF){
       if(!p.isClass && p.isClass !== undefined){
-        html += `<tr class="break"><th>${p.label}<span class="time">${p.time}</span></th>`;
+        html += `<tr class="break"><th>${p.label}<span class="time">${p.start}–${p.end}</span></th>`;
         for(let d=1;d<=5;d++) html += `<td>—</td>`;
         html += '</tr>';
         continue;
       }
-      html += `<tr><th>${p.label}<span class="time">${p.time}</span></th>`;
+      html += `<tr><th>${p.label}<span class="time">${p.start}–${p.end}</span></th>`;
       for(let d=1;d<=5;d++){
         const info = WEEK[d][p.id];
         const cls = 'cell' + (d===todayDow?' today-col':'');
@@ -736,25 +646,18 @@
     $('#week-table').innerHTML = html;
   }
 
-  function renderCalSelectHint(){
-    const el = document.getElementById('cal-select-hint');
-    if(!el) return;
-    if(selectedCalDateStr){
-      el.innerHTML = `<div class="cal-select-hint">✅ 已選擇 ${selectedCalDateStr}，請往下捲動填寫「新增行程」表單</div>`;
-    } else {
-      el.innerHTML = '';
-    }
-  }
-
   function renderCalendar(){
     const year = currentCalDate.getFullYear();
     const month = currentCalDate.getMonth();
     $('#cal-month-title').textContent = `${year} 年 ${month + 1} 月`;
 
     const grid = $('#cal-grid');
+    grid.innerHTML = '';
 
     const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
-    let gridHtml = weekDays.map(wd => `<div class="cal-day-head">${wd}</div>`).join('');
+    weekDays.forEach(wd => {
+      grid.innerHTML += `<div class="cal-day-head">${wd}</div>`;
+    });
 
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -772,7 +675,7 @@
     const prevMonthLastDay = new Date(year, month, 0).getDate();
     for (let i = startDayOfWeek - 1; i >= 0; i--) {
       const dNum = prevMonthLastDay - i;
-      gridHtml += `<div class="cal-cell other-month"><span class="cal-num">${dNum}</span></div>`;
+      grid.innerHTML += `<div class="cal-cell other-month"><span class="cal-num">${dNum}</span></div>`;
     }
 
     for (let d = 1; d <= totalDays; d++) {
@@ -791,139 +694,108 @@
         dotsHtml = '<div class="cal-dots">' + '<div class="cal-dot"></div>'.repeat(Math.min(evCount, 3)) + '</div>';
       }
 
-      gridHtml += `<div class="cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" data-date="${dStr}"><span class="cal-num">${d}</span>${dotsHtml}</div>`;
+      const cell = document.createElement('div');
+      cell.className = `cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`;
+      cell.innerHTML = `<span class="cal-num">${d}</span>${dotsHtml}`;
+      
+      // 📌 綁定點擊事件直接彈出視窗
+      cell.addEventListener('click', (function(dateStr){
+        return function(){
+          selectedCalDateStr = dateStr;
+          openEventModal(dateStr);
+          renderCalendar();
+        };
+      })(dStr));
+
+      grid.appendChild(cell);
     }
 
     const totalRendered = startDayOfWeek + totalDays;
     const remaining = (7 - (totalRendered % 7)) % 7;
     for (let i = 1; i <= remaining; i++) {
-      gridHtml += `<div class="cal-cell other-month"><span class="cal-num">${i}</span></div>`;
+      grid.innerHTML += `<div class="cal-cell other-month"><span class="cal-num">${i}</span></div>`;
     }
-
-    grid.innerHTML = gridHtml;
   }
-
-  // 用事件代理綁在月曆容器上，不管畫面重繪幾次都不會失效
-  $('#cal-grid').addEventListener('click', (e) => {
-    const cell = e.target.closest('.cal-cell[data-date]');
-    if(!cell) return;
-    const dStr = cell.dataset.date;
-    if(selectedCalDateStr === dStr){
-      selectedCalDateStr = null;
-    } else {
-      selectedCalDateStr = dStr;
-      $('#ev-date').value = dStr;
-      // 不自動捲動、不自動彈鍵盤，讓月曆保持在畫面上，使用者自己往下滑填表單
-    }
-    renderCalendar();
-    renderEvents();
-    renderCalSelectHint();
-  });
 
   $('#cal-prev').addEventListener('click', () => {
     currentCalDate.setMonth(currentCalDate.getMonth() - 1);
     renderCalendar();
-    renderEvents();
   });
   $('#cal-next').addEventListener('click', () => {
     currentCalDate.setMonth(currentCalDate.getMonth() + 1);
     renderCalendar();
-    renderEvents();
   });
 
-  // ---------- 新增：計算行程倒數天數的顯示文字 ----------
-  function countdownLabel(ts){
-    const now = new Date();
-    const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const targetMid = new Date(new Date(ts).getFullYear(), new Date(ts).getMonth(), new Date(ts).getDate()).getTime();
-    const daysDiff = Math.round((targetMid - todayMid) / (1000*60*60*24));
-    if(daysDiff < 0) return {text:`已過 ${Math.abs(daysDiff)} 天`, today:false};
-    if(daysDiff === 0) return {text:'就是今天', today:true};
-    if(daysDiff === 1) return {text:'明天', today:false};
-    return {text:`${daysDiff} 天後`, today:false};
+  // 彈出視窗控制
+  const modal = $('#event-modal');
+  function openEventModal(dateStr){
+    $('#modal-date-input').value = dateStr;
+    $('#modal-date-title').textContent = `📌 新增 ${dateStr} 行程與推播`;
+    $('#modal-title-input').value = '';
+    $('#modal-note-input').value = '';
+    $('#modal-status').className = 'status-line';
+    modal.classList.add('open');
   }
+  function closeEventModal(){
+    modal.classList.remove('open');
+  }
+  $('#modal-close-btn').addEventListener('click', closeEventModal);
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeEventModal(); });
 
-  let showAllEvents = false;
-  let expiredExpanded = false;
+  $('#modal-save-btn').addEventListener('click', async ()=>{
+    const title = $('#modal-title-input').value.trim();
+    const date = $('#modal-date-input').value;
+    const time = $('#modal-time-input').value || '18:00';
+    const note = $('#modal-note-input').value.trim();
+    if(!title || !date){
+      const st = $('#modal-status'); st.textContent = '請填寫行程標題'; st.className = 'status-line err'; return;
+    }
+    const ts = new Date(`${date}T${time}:00`).getTime();
+    const ev = {id: 'ev_'+Date.now(), title, note, ts, scheduled:false};
+    const now = Date.now();
+    const diff = ts - now;
+    const THREE_DAYS = 3*24*60*60*1000 - 60*1000;
+    if(diff > 0 && diff <= THREE_DAYS && TOPIC){
+      try{
+        await publish(TOPIC, {title:'📌 '+title, body: note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
+        ev.scheduled = true; ev.scheduledAt = now;
+      }catch(e){ console.error(e); }
+    }
+    EVENTS.push(ev);
+    await setVal('calendar-events', EVENTS);
+    renderCalendar();
+    renderEvents();
+    closeEventModal();
+  });
 
   function renderEvents(){
     const list = $('#ev-list');
     let filtered = [...EVENTS];
-    const toggleBtn = $('#btn-toggle-all-events');
+    const sorted = filtered.sort((a,b)=> a.ts - b.ts);
 
-    if(!showAllEvents){
-      const y = currentCalDate.getFullYear();
-      const m = currentCalDate.getMonth();
-      $('#ev-list-title').textContent = `📌 ${y} 年 ${m+1} 月行程`;
-      filtered = filtered.filter(ev => {
-        const d = new Date(ev.ts);
-        return d.getFullYear() === y && d.getMonth() === m;
-      });
-      toggleBtn.style.display = 'inline-block';
-      toggleBtn.textContent = '顯示全部行程';
-    } else {
-      $('#ev-list-title').textContent = '📌 全部行程列表';
-      toggleBtn.style.display = 'inline-block';
-      toggleBtn.textContent = '只看當月';
-    }
-
-    if(filtered.length === 0){
-      list.innerHTML = `<div class="empty-state">這個月還沒有行程</div>`;
+    if(sorted.length === 0){
+      list.innerHTML = `<div class="empty-state">還沒有新增任何行程（點上方日曆日期即可新增）</div>`;
       return;
     }
 
-    const now = Date.now();
-    const upcoming = filtered.filter(ev => ev.ts >= now).sort((a,b)=> a.ts - b.ts);
-    const expired = filtered.filter(ev => ev.ts < now).sort((a,b)=> b.ts - a.ts);
-
-    const renderItem = (ev) => {
+    list.innerHTML = sorted.map(ev=>{
       const d = new Date(ev.ts);
-      const status = ev.scheduled ? `<span class="ev-status st-scheduled">已排定 ntfy 通知</span>` : `<span class="ev-status st-far">超過 3 天，等待自動補排</span>`;
-      const cd = countdownLabel(ev.ts);
-      const cdBadge = `<span class="ev-status st-countdown${cd.today?' today':''}">⏳ ${cd.text}</span>`;
+      const status = ev.scheduled ? `<span class="ev-status st-scheduled">已排定推播通知</span>` : `<span class="ev-status st-far">超過 3 天，等待自動補排</span>`;
       return `<div class="ev-item">
         <div class="ev-date"><div class="d">${d.getDate()}</div><div class="m">${d.getMonth()+1} 月</div></div>
         <div class="ev-body">
           <div class="ev-title">${escapeHtml(ev.title)}</div>
-          <div class="ev-meta">${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}　${ev.note?escapeHtml(ev.note):''}</div>
-          ${cdBadge}${status}
+          <div class="ev-meta">${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}　${ev.note?escapeHtml(ev.note):''}</div>
+          ${status}
         </div>
         <div class="ev-actions">
           <button class="btn small ghost" data-del="${ev.id}">刪除</button>
         </div>
       </div>`;
-    };
-
-    let html = upcoming.map(renderItem).join('');
-
-    if(expired.length > 0){
-      html += `<div id="expired-toggle" style="text-align:center; padding:10px 4px; cursor:pointer; color:var(--muted); font-size:12px; font-weight:700; border-top:1px dashed var(--line); margin-top:4px;">
-        ${expiredExpanded ? '▲ 收合已過期行程' : `▾ 已過期行程（${expired.length} 筆），點擊展開`}
-      </div>`;
-      if(expiredExpanded){
-        html += expired.map(renderItem).join('');
-      }
-    }
-
-    if(upcoming.length === 0 && expired.length > 0 && !expiredExpanded){
-      html = `<div class="empty-state">這個範圍內沒有即將到來的行程</div>` + html;
-    }
-
-    list.innerHTML = html;
-
-    const expiredToggle = document.getElementById('expired-toggle');
-    if(expiredToggle){
-      expiredToggle.addEventListener('click', ()=>{
-        expiredExpanded = !expiredExpanded;
-        renderEvents();
-      });
-    }
+    }).join('');
 
     list.querySelectorAll('[data-del]').forEach(btn=>{
       btn.addEventListener('click', async ()=>{
-        const target = EVENTS.find(e=>e.id===btn.dataset.del);
-        const name = target ? target.title : '這筆行程';
-        if(!window.confirm(`確定要刪除「${name}」嗎？`)) return;
         EVENTS = EVENTS.filter(e=>e.id!==btn.dataset.del);
         await setVal('calendar-events', EVENTS);
         renderCalendar();
@@ -931,10 +803,6 @@
       });
     });
   }
-  $('#btn-toggle-all-events').addEventListener('click', ()=>{
-    showAllEvents = !showAllEvents;
-    renderEvents();
-  });
   function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
   async function autoRescheduleUpcoming(){
@@ -946,7 +814,7 @@
       const diff = ev.ts - now;
       if(diff > 0 && diff <= THREE_DAYS && TOPIC){
         try{
-          await publish(TOPIC, {title:'📌 '+ev.title, body: ev.note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
+          await publish(TOPIC, {title:'📌 '+title, body: ev.note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
           ev.scheduled = true; ev.scheduledAt = now;
           changed = true;
         }catch(e){ console.error(e); }
@@ -961,14 +829,13 @@
     let html = '';
     for(let d=1; d<=5; d++){
       const text = dayScheduleText(d);
-      const cronExpr = `0 17 * * ${CRON_DOW_FOR[d]}`;
-      // 自動打包成 GET 參數網址，完全不需要填 Header 和 Body 欄位！
+      const cronExpr = `0 18 * * ${CRON_DOW_FOR[d]}`;
       const safeTitle = encodeURIComponent(`📚 明天課表（${DAYNAMES[d]}）`);
       const safeBody = encodeURIComponent(text);
       const fullUrl = `https://ntfy.sh/${topic}?title=${safeTitle}&message=${safeBody}`;
 
       html += `<div class="cron-card">
-        <h3>${DAYNAMES[d]}的課（於前一天 17:00 送出）</h3>
+        <h3>${DAYNAMES[d]}的課（於前一天 18:00 送出）</h3>
         <div class="kv"><div class="k">排程</div><div class="v">${cronExpr}<button class="btn small copybtn" data-copy="${cronExpr}">複製</button></div></div>
         <div class="kv"><div class="k">完整網址</div><div class="v" style="word-break:break-all;">${fullUrl}<button class="btn small copybtn" data-copy="${fullUrl}">複製網址</button></div></div>
       </div>`;
@@ -984,8 +851,7 @@
   $$('nav button').forEach(b=> b.addEventListener('click', ()=> switchView(b.dataset.view)));
 
   $('#btn-save-topic').addEventListener('click', async ()=>{
-    TOPIC = cleanTopic($('#set-topic').value);
-    $('#set-topic').value = TOPIC;
+    TOPIC = $('#set-topic').value.trim();
     await setVal('ntfy-topic', TOPIC);
     showStatus('#set-status', TOPIC ? '已儲存主題：'+TOPIC : '請輸入主題名稱', TOPIC?'ok':'err');
   });
@@ -1033,83 +899,14 @@
     });
   });
 
-  $('#btn-add-event').addEventListener('click', async ()=>{
-    const title = $('#ev-title').value.trim();
-    const date = $('#ev-date').value;
-    const time = $('#ev-time').value || '18:00';
-    const note = $('#ev-note').value.trim();
-    if(!title || !date){ showStatus('#ev-status','請填寫標題與日期','err'); return; }
-    const ts = new Date(`${date}T${time}:00`).getTime();
-    const ev = {id: 'ev_'+Date.now(), title, note, ts, scheduled:false};
-    const now = Date.now();
-    const diff = ts - now;
-    const THREE_DAYS = 3*24*60*60*1000 - 60*1000;
-    if(diff > 0 && diff <= THREE_DAYS && TOPIC){
-      try{
-        await publish(TOPIC, {title:'📌 '+title, body: note || '行事曆提醒', delaySeconds: Math.floor(diff/1000)});
-        ev.scheduled = true; ev.scheduledAt = now;
-      }catch(e){ console.error(e); }
-    }
-    EVENTS.push(ev);
-    await setVal('calendar-events', EVENTS);
-    $('#ev-title').value=''; $('#ev-date').value=''; $('#ev-note').value='';
-    renderCalendar();
-    renderEvents();
-    showStatus('#ev-status', ev.scheduled ? '已加入並排定通知' : '已加入行事曆', 'ok');
-  });
-
   function showStatus(sel, msg, kind){
     const el = $(sel);
     el.textContent = msg;
     el.className = 'status-line ' + kind;
   }
 
-  $('#btn-export-data').addEventListener('click', ()=>{
-    const backup = {
-      ntfyTopic: TOPIC,
-      calendarEvents: EVENTS,
-      exportedAt: new Date().toISOString()
-    };
-    const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const dstr = new Date().toISOString().split('T')[0];
-    a.download = `課表控制台備份_${dstr}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showStatus('#backup-status', '備份已下載！', 'ok');
-  });
-
-  $('#btn-import-data').addEventListener('change', (e)=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = async (evt)=>{
-      try{
-        const data = JSON.parse(evt.target.result);
-        if(typeof data.ntfyTopic === 'string'){
-          TOPIC = cleanTopic(data.ntfyTopic);
-          await setVal('ntfy-topic', TOPIC);
-          $('#set-topic').value = TOPIC;
-        }
-        if(Array.isArray(data.calendarEvents)){
-          EVENTS = data.calendarEvents;
-          await setVal('calendar-events', EVENTS);
-        }
-        renderCalendar();
-        renderEvents();
-        showStatus('#backup-status', '匯入成功！', 'ok');
-      }catch(err){
-        showStatus('#backup-status', '匯入失敗，檔案格式不正確', 'err');
-      }
-    };
-    reader.readAsText(file);
-  });
-
   (async function init(){
-    TOPIC = cleanTopic(await getVal('ntfy-topic', ''));
-    await setVal('ntfy-topic', TOPIC); // 自動修復先前混入的隱藏字元
+    TOPIC = await getVal('ntfy-topic', '');
     EVENTS = await getVal('calendar-events', []);
     THEME_DARK = await getPersonal('theme-dark', false);
     SOUND_ON = await getPersonal('sound-on', true);
@@ -1120,11 +917,10 @@
     renderWeek();
     renderCalendar();
     renderEvents();
-    renderCalSelectHint();
     await autoRescheduleUpcoming();
     renderCalendar();
     renderEvents();
-    setInterval(renderNextClass, 60000);
+    setInterval(updateLiveStatus, 60000);
   })();
 })();
 </script>
