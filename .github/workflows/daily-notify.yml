@@ -1,13 +1,14 @@
-name: daily-notify
+name: 每日課表自動推播
 on:
 schedule:
 - cron: '0 9 * * 0-4'
 workflow_dispatch:
 jobs:
-send:
+send_schedule:
 runs-on: ubuntu-latest
 steps:
-- uses: actions/github-script@v6
+- name: 執行推播程式
+uses: actions/github-script@v6
 with:
 script: |
 const topic = 'shuangzi-schedule-hs0819';
@@ -25,5 +26,10 @@ if (targetDow === 6) targetDow = 1;
 if(week[targetDow]) {
 const title = "=?UTF-8?B?" + Buffer.from("📚 明天課表（" + dayNames[targetDow] + "）").toString('base64') + "?=";
 const message = week[targetDow].join('\n');
-await fetch("https://ntfy.sh/" + topic, { method: 'POST', headers: { 'Title': title }, body: message });
+await fetch("https://ntfy.sh/" + topic, {
+method: 'POST',
+headers: { 'Title': title },
+body: message
+});
+console.log("成功送出課表：" + dayNames[targetDow]);
 }
